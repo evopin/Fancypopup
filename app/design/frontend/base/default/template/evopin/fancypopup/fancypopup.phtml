@@ -1,0 +1,68 @@
+<?php
+if ($this->okShowPopup) :
+	$width = $this->obtainWidthImage ();
+	$height = $this->obtainHeightImage ();
+	$src_img = $this->obtainImage ();
+	$href_link = $this->obtainUrl ();
+	$opacity = $this->obtainOpacity ();
+	$open_timer = $this->obtainDelayStart ();
+	$close_timer = $this->obtainDelayClose ();
+	$cookie = Mage::getSingleton('core/cookie');
+	?>
+<div class="md-modal md-effect-<?php echo Mage::getStoreConfig('featuredpopup/general/effect'); ?>" id="featuredpopupModal">
+	<div class="md-content">
+		<!-- <h3>Modal Dialog</h3> -->
+		<div>
+			<!-- <p>This is a modal window. You can do the following things with it:</p>
+					<ul>
+						<li><strong>Read:</strong> modal windows will probably tell you something important so don't forget to read what they say.</li>
+						<li><strong>Look:</strong> a modal window enjoys a certain kind of attention; just look at it and appreciate its presence.</li>
+						<li><strong>Close:</strong> click on the button below to close the modal.</li>
+					</ul>
+					<button class="md-close">Close me!</button> -->
+			<a href="<?php echo $href_link; ?>"> 
+				<img
+				src="<?php echo $src_img; ?>" width="<?php echo $width; ?>"
+				height="<?php echo $height; ?>" />
+			</a>
+			<?php if(Mage::getStoreConfig('featuredpopup/general/close')): ?>
+				<button class="md-close" id="close-btn"><?php echo $this->__('Close me!'); ?></button>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>
+
+
+<div class="md-overlay"></div>
+<!-- the overlay element -->
+<script type="text/javascript">
+		var delayStart = <?php echo $this->obtainDelayStart() * 1000; ?>;
+		var delayClose = <?php echo $this->obtainDelayClose() * 1000; ?>;
+		(function ( $ ) {
+			$(document).ready(function() {
+				$('#close-btn').click(function() {
+					$('#featuredpopupModal').featuredpopup('hide');
+				});
+				<?php if(Mage::getStoreConfig('featuredpopup/general/overlay_close')): ?>
+				$('.md-overlay').click(function() {
+					$('#featuredpopupModal').featuredpopup('hide');
+				});
+				<?php endif; ?>
+				<?php if($cookie->get('shopgo_featuredpopup') != 1 || Mage::getStoreConfig('featuredpopup/general/always_show')): ?>
+				setTimeout(function() {
+					$('#featuredpopupModal').featuredpopup('show');
+				}, delayStart);
+				setTimeout(function() {
+					$('#featuredpopupModal').featuredpopup('hide');
+				}, delayClose);
+				<?php $cookie->set('shopgo_featuredpopup', '1' ,time() + Mage::getStoreConfig('featuredpopup/general/cookie_lifetime'),'/'); ?>
+				<?php endif; ?>
+			});	
+		}(jQuery));
+	</script>
+<?php endif ?>
+
+
+
+		
+		

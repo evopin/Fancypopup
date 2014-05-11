@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    	<reference name="head">
+    		<action method="addCss"><stylesheet>shopgo/featuredpopup/css/component.css</stylesheet></action>
+            <action method="addCss"><stylesheet>shopgo/featuredpopup/css/style.css</stylesheet></action>
+            <action method="addItem" ifconfig="featuredpopup/general/jquery"><type>skin_js</type><file>shopgo/featuredpopup/js/jquery-2.1.0.min.js</file></action>
+            <action method="addItem" ifconfig="featuredpopup/general/jquery"><type>skin_js</type><file>shopgo/featuredpopup/js/jquery-noConflict.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>shopgo/featuredpopup/js/featuredpopup.js</file></action>
+            <action method="addItem"><type>skin_js</type><file>shopgo/featuredpopup/js/script.js</file></action>
+		</reference>
+		<reference name="after_body_start">
+			<block type="featuredpopup/featuredpopup" name="featuredpopup" as="featuredpopup" template="shopgo/featuredpopup/featuredpopup.phtml" />
+		</reference>
+    </default>     
+</layout>
+
+
